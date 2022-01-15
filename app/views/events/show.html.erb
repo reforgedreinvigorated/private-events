@@ -1,4 +1,4 @@
 <h1 text-align = "center"><%= @event.name %></h2>
 <%= @event.location %>
 <%= @event.date.strftime("%b %d %Y, %l:%M")%>
-<div>Hosted by <%= @event.creator.name%></div>
+<div>Hosted by <%= link_to @event.creator.name, @event.creator%></div>
