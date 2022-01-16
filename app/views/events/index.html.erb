@@ -1,4 +1,12 @@
-<h1 text-align = "center">Events</h1>
+<div>
+    <% if user_signed_in? %>
+        <%= button_to "Create Event", new_event_path, method: :get%>
+        <%= button_to "Sign Out", destroy_user_session_path, method: :delete%>
+    <% else %>
+        <%= button_to "Sign In", new_user_session_path, method: :delete%>
+    <% end %>
+</div>
+<h1>Events</h1>
 
 <% @events.each do |event| %>
     <div><%= link_to event.name, event%></div>
