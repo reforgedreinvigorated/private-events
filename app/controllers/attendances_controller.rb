@@ -6,7 +6,7 @@ class AttendancesController < ApplicationController
         @attendance = current_user.attendances.build(attended_event_id: event.id)
         if @attendance.save
             flash[:notice] = "You are attending #{event.name}"
-            redirect_to user_path
+            redirect_to current_user
         else
             flash[:alert] = "You are already attending #{event.name}"
             redirect_to event_path(params[:event_id])
