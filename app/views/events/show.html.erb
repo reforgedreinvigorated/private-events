@@ -1,4 +1,10 @@
 <div>
+    <% if current_user.id == @event.creator.id %>
+        <%= button_to "Edit", edit_event_path, method: :get%>
+        <%= button_to "Delete", event_path, method: :delete%>
+    <% end %>
+</div>
+<div>
     <h1 text-align = "center"><%= @event.name %></h2>
     <%= @event.location %><br />
     <%= @event.date.strftime("%b %d %Y, %l:%M %P")%>
