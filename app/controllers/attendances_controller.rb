@@ -13,6 +13,20 @@ class AttendancesController < ApplicationController
         end
     end
 
+    def destroy
+        user_id = params[:attendee_id]
+        event = Event.find(params[:attended_event_id])
+
+        @attendance = Attendance.find_by(attendee_id: user_id, attended_event_id: event.id)
+        if @attendance.destroy
+            flash[:notice] = "You are no longer attending #{event.name}"
+            redirect_to event_path(event.id)
+        else
+            flash[:alert] = "Failed to stop attending #{event.name}"
+            render root_path
+        end
+
+    end
     
     private
 

@@ -1,5 +1,5 @@
 <div>
-    <% if current_user.id == @event.creator.id %>
+    <% if user_signed_in? and current_user.id == @event.creator.id %>
         <%= button_to "Edit", edit_event_path, method: :get%>
         <%= button_to "Delete", event_path, method: :delete%>
     <% end %>
@@ -9,10 +9,15 @@
     <%= @event.location %><br />
     <%= @event.date.strftime("%b %d %Y, %l:%M %P")%>
     <div>Hosted by <%= link_to @event.creator.name, @event.creator%></div>
-    <% if @event.date >= DateTime.current %>
-        <%= button_to "Attend this event", attendances_path, params: {:event_id => @event.id}%>
-    <% else %>
+    <% if @event.date < DateTime.current %>
         <%= button_to "This event has passed", {}, :disabled => true %>
+        
+    <% else %>
+        <% if user_signed_in? and current_user.attended_events.where("attended_event_id = ?", @event.id).count > 0%>
+            <%= button_to "Attending", attendance_path, method: :delete, params: {:attendee_id => current_user.id, :attended_event_id => @event.id} %>
+        <% else %>
+            <%= button_to "Attend this event", attendances_path, params: {:event_id => @event.id}%>
+        <% end %>
     <% end %>
 </div>
 <div>
