@@ -1,4 +1,20 @@
-<h1><%= @user.name %>'s Events</h1>
-<% @user.events.each do |event|%>
-    <p> Event: <%= event.name%> </p></ br>
-<% end %>
+<div>
+    <h1><%= @user.name %>'s Events</h1>
+    <% @user.events.each do |event|%>
+        <p> <%= event.name%> </p></ br>
+    <% end %>
+</div>
+
+<div>
+    <h3>Past Events Attended</h3>
+    <% @user.attended_events.where("date < ?", DateTime.current).each do |event|%>
+        <%= link_to event.name, event%>
+    <% end %>
+</div>
+
+<div>
+    <h3>Upcoming Events</h3>
+    <% @user.attended_events.where("date >= ?", DateTime.current).each do |event|%>
+        <%= link_to event.name, event%>
+    <% end %>
+</div>

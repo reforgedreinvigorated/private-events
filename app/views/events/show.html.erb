@@ -1,4 +1,17 @@
-<h1 text-align = "center"><%= @event.name %></h2>
-<%= @event.location %>
-<%= @event.date.strftime("%b %d %Y, %l:%M %P")%>
-<div>Hosted by <%= link_to @event.creator.name, @event.creator%></div>
+<div>
+    <h1 text-align = "center"><%= @event.name %></h2>
+    <%= @event.location %><br />
+    <%= @event.date.strftime("%b %d %Y, %l:%M %P")%>
+    <div>Hosted by <%= link_to @event.creator.name, @event.creator%></div>
+    <% if @event.date >= DateTime.current %>
+        <%= button_to "Attend this event", attendances_path, params: {:event_id => @event.id}%>
+    <% else %>
+        <%= button_to "This event has passed", {}, :disabled => true %>
+    <% end %>
+</div>
+<div>
+    <div>List of Attendees</div>
+    <% @event.attendees.each do |attendee| %>
+        <%= attendee.name %><br />
+    <% end %>
+</div>
